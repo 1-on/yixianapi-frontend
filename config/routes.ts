@@ -4,6 +4,11 @@ export default [
     layout: false,
     routes: [{name: '登录', path: '/user/login', component: './User/Login'}],
   },
+  {
+    path: '/user',
+    layout: false,
+    routes: [{name: '注册', path: '/user/register', component: './User/Register'}],
+  },
   {path: '/', name: '主页', icon: 'smile', component: './Index'},
   {path: '/interface_info/:id', name: '查看接口', icon: 'smile', component: './InterfaceInfo', hideInMenu: true},
   {

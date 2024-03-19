@@ -13,100 +13,105 @@ const loginPath = '/user/login';
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
 export async function getInitialState(): Promise<InitialState> {
-  // 当页面首次加载时，获取要全局保存的数据，比如用户登录信息
-  const state: InitialState = {
-    loginUser: undefined,
-  }
-  const fetchUserInfo = async () => {
-    try {
-      const res = await getLoginUser();
-      if (res.data) {
-        state.loginUser = res.data;
-      }
-    } catch (error) {
-      history.push(loginPath);
+    // 当页面首次加载时，获取要全局保存的数据，比如用户登录信息
+    const state: InitialState = {
+        loginUser: undefined,
     }
-    // return undefined;
-  };
-  await fetchUserInfo()
-  return state
+    const currentPath = window.location.pathname;
+    console.log("currentPath:" + currentPath);
+    if (currentPath === '/user/login' || currentPath === '/user/register') {
+        return state;
+    }
+    const fetchUserInfo = async () => {
+        try {
+            const res = await getLoginUser();
+            if (res.data) {
+                state.loginUser = res.data;
+            }
+        } catch (error) {
+            history.push(loginPath);
+        }
+        // return undefined;
+    };
+    await fetchUserInfo()
+    return state
 }
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({initialState, setInitialState}) => {
-  return {
-    actionsRender: () => [<Question key="doc"/>],
-    avatarProps: {
-      src: initialState?.loginUser?.userAvatar,
-      title: <AvatarName/>,
-      render: (_, avatarChildren) => {
-        return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
-      },
-    },
-    waterMarkProps: {
-      content: initialState?.loginUser?.userName,
-    },
-    footerRender: () => <Footer/>,
-    onPageChange: () => {
-      const {location} = history;
-      // 如果没有登录，重定向到 login
-      if (!initialState?.loginUser && location.pathname !== loginPath) {
-        history.push(loginPath);
-      }
-    },
-    bgLayoutImgList: [
-      {
-        src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
-        left: 85,
-        bottom: 100,
-        height: '303px',
-      },
-      {
-        src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/C2TWRpJpiC0AAAAAAAAAAAAAFl94AQBr',
-        bottom: -68,
-        right: -45,
-        height: '303px',
-      },
-      {
-        src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/F6vSTbj8KpYAAAAAAAAAAAAAFl94AQBr',
-        bottom: 0,
-        left: 0,
-        width: '331px',
-      },
-    ],
-    links: isDev
-      ? [
-        <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-          <LinkOutlined/>
-          <span>OpenAPI 文档</span>
-        </Link>,
-      ]
-      : [],
-    menuHeaderRender: undefined,
-    // 自定义 403 页面
-    // unAccessible: <div>unAccessible</div>,
-    // 增加一个 loading 的状态
-    childrenRender: (children) => {
-      // if (initialState?.loading) return <PageLoading />;
-      return (
-        <>
-          {children}
-          {isDev && (
-            <SettingDrawer
-              disableUrlParams
-              enableDarkTheme
-              onSettingChange={(settings) => {
-                setInitialState((preInitialState) => ({
-                  ...preInitialState,
-                  settings,
-                }));
-              }}
-            />
-          )}
-        </>
-      );
-    },
-  };
+    return {
+        actionsRender: () => [<Question key="doc"/>],
+        avatarProps: {
+            src: initialState?.loginUser?.userAvatar,
+            title: <AvatarName/>,
+            render: (_, avatarChildren) => {
+                return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
+            },
+        },
+        waterMarkProps: {
+            content: initialState?.loginUser?.userName,
+        },
+        footerRender: () => <Footer/>,
+        onPageChange: () => {
+            const {location} = history;
+            // 如果没有登录，重定向到 login
+            if (!initialState?.loginUser && location.pathname !== loginPath) {
+                history.push(loginPath);
+            }
+        },
+        bgLayoutImgList: [
+            {
+                src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
+                left: 85,
+                bottom: 100,
+                height: '303px',
+            },
+            {
+                src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/C2TWRpJpiC0AAAAAAAAAAAAAFl94AQBr',
+                bottom: -68,
+                right: -45,
+                height: '303px',
+            },
+            {
+                src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/F6vSTbj8KpYAAAAAAAAAAAAAFl94AQBr',
+                bottom: 0,
+                left: 0,
+                width: '331px',
+            },
+        ],
+        links: isDev
+            ? [
+                <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+                    <LinkOutlined/>
+                    <span>OpenAPI 文档</span>
+                </Link>,
+            ]
+            : [],
+        menuHeaderRender: undefined,
+        // 自定义 403 页面
+        // unAccessible: <div>unAccessible</div>,
+        // 增加一个 loading 的状态
+        childrenRender: (children) => {
+            // if (initialState?.loading) return <PageLoading />;
+            return (
+                <>
+                    {children}
+                    {isDev && (
+                        <SettingDrawer
+                            disableUrlParams
+                            enableDarkTheme
+                            onSettingChange={(settings) => {
+                                setInitialState((preInitialState) => ({
+                                    ...preInitialState,
+                                    settings,
+                                }));
+                            }}
+                        />
+                    )}
+                </>
+            );
+        },
+    };
 };
 
 /**
@@ -115,6 +120,6 @@ export const layout: RunTimeLayoutConfig = ({initialState, setInitialState}) => 
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request = {
-  baseURL: 'http://localhost:8080',
-  ...errorConfig,
+    baseURL: 'http://localhost:8080',
+    ...errorConfig,
 };

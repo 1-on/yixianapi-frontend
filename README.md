@@ -1,57 +1,48 @@
-# Ant Design Pro
+# API 接口调用平台DEMO（接入第三方API并提供在线调用地址）
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
+（此仓库为前端代码）[后端仓库](https://github.com/1-on/yixianapi-backend)
+[toc]
 
-## Environment Prepare
+> 作者：[一弦](https://github.com/1-on)
 
-Install `node_modules`:
+### 项目功能
 
-```bash
-npm install
-```
+- 提供 API 接口供开发者调用
+- 管理员可以对接口进行增删改查、上线、下线
+- 用户可以注册登录并开通接口调用权限、浏览接口、在线调试
+- 开发者可以使用客户端 SDK 轻松在代码中调用接口
 
-or
+### 技术栈
 
-```bash
-yarn
-```
+#### 后端
 
-## Provided Scripts
+- springboot 3.2.2
+- MySQL 数据库
+- MyBatis-Plus 以及 MyBatis X 自动生成
+- API 签名认证（Http 调用）
+- RPC 调用（dubbo + nacos）
+- Spring Cloud Gateway 微服务网关
+- Swagger + Knife4j 接口文档生成
+- SpringBoot Starter (SDK 开发)
 
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
+#### 前端
 
-Scripts provided in `package.json`. It's safe to modify or add additional script:
+- React 18
+- Ant Design Pro 6.x 脚手架
+- Ant Design & ProComponents 组件库
+- OpenAPI 前端代码生成
 
-### Start project
+### 模块介绍
+- yixianapi-backend 平台主要后端
+- yixianapi-client-sdk 供开发者调用的SDK
+- yixianapi-common rpc调用接口
+- yixianapi-gateway api网关
+- yixianapi-interface 模拟接口
 
-```bash
-npm start
-```
-
-### Build project
-
-```bash
-npm run build
-```
-
-### Check code style
-
-```bash
-npm run lint
-```
-
-You can also use script to auto fix some lint error:
-
-```bash
-npm run lint:fix
-```
-
-### Test code
-
-```bash
-npm test
-```
-
-## More
-
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
+### 项目截图
+![image](https://github.com/1-on/yixianapi-backend/blob/master/doc/imgs/img.png)
+![image](https://github.com/1-on/yixianapi-backend/blob/master/doc/imgs/img_1.png)
+![image](https://github.com/1-on/yixianapi-backend/blob/master/doc/imgs/img_2.png)
+![image](https://github.com/1-on/yixianapi-backend/blob/master/doc/imgs/img_3.png)
+![image](https://github.com/1-on/yixianapi-backend/blob/master/doc/imgs/img_4.png)
+![image](https://github.com/1-on/yixianapi-backend/blob/master/doc/imgs/img_5.png)
